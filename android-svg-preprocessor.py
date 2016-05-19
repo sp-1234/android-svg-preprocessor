@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 
-import os
-from os import path
-import shlex
-import shutil
 import argparse
-from shlex import quote
+import os
 
 DEFAULT_TARGET_PATH = os.getcwd()
 DEFAULT_PREFIX = 'drawable'
