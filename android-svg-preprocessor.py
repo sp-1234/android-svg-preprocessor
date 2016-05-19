@@ -53,13 +53,12 @@ def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix):
         output_path,
         resource_name + ".png"
     )
-    density_percent = 100.0 * dpi_scale
+    render_density = 90 * dpi_scale
     cmd = [
         'convert',
-        '-density', '{}%'.format(density_percent),
+        '-density', str(render_density),
         '-background', 'none',
         input_file,
-        '-colorspace', 'srgb',
         '-depth', '8',
         output_file_path
     ]
