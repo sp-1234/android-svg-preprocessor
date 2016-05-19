@@ -53,7 +53,7 @@ def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix):
         output_path,
         resource_name + ".png"
     )
-    render_density = 90 * dpi_scale
+    render_density = int(round(90 * dpi_scale))
     cmd = [
         'convert',
         '-density', str(render_density),
