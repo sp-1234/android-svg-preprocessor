@@ -28,7 +28,7 @@ def parse_args():
                     help='the resources path, default is %s' % DEFAULT_TARGET_PATH)
 
     ap.add_argument('--prefix', default=DEFAULT_PREFIX,
-                    help='the resources path, default is %s' % DEFAULT_TARGET_PATH)
+                    help='prefix, default is %s' % DEFAULT_PREFIX)
 
     ap.add_argument('input_files', nargs='+', help='input images (SVG)')
     return ap.parse_args()
