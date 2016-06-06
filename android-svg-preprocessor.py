@@ -56,6 +56,7 @@ def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix):
         '-background', 'none',
         input_file,
         '-depth', '8',
+        '-colorspace', 'srgb',
         output_file_path
     ]
     sh(cmd)
