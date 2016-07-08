@@ -29,6 +29,7 @@ def parse_args():
 
     ap.add_argument('--prefix', default=DEFAULT_PREFIX,
                     help='prefix, default is %s' % DEFAULT_PREFIX)
+    ap.add_argument('--scale', default='1')
 
     ap.add_argument('input_files', nargs='+', help='input images (SVG)')
     return ap.parse_args()
@@ -38,7 +39,7 @@ def basename_no_ext(full_path):
     return os.path.splitext(os.path.basename(full_path))[0]
 
 
-def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix):
+def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix, scale):
     resource_name = basename_no_ext(input_file)
     output_path = os.path.join(
         output_path,
@@ -49,7 +50,7 @@ def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix):
         output_path,
         resource_name + ".png"
     )
-    render_density = int(round(90 * dpi_scale))
+    render_density = 90 * dpi_scale * scale
     cmd = [
         'convert',
         '-density', str(render_density),
@@ -62,14 +63,14 @@ def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix):
     sh(cmd)
 
 
-def process_file(input_file, output_path, prefix):
+def process_file(input_file, output_path, prefix, scale):
     for dpi_name, dpi_scale in DPIS.items():
-        process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix)
+        process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix, scale)
 
 
-def do_process(inputs, output_path, prefix):
+def do_process(inputs, output_path, prefix, scale):
     for input_file in inputs:
-        process_file(input_file, output_path, prefix)
+        process_file(input_file, output_path, prefix, scale)
 
 
 def main():
@@ -77,7 +78,8 @@ def main():
     inputs = ap.input_files
     output_path = ap.path
     prefix = ap.prefix
-    do_process(inputs, output_path, prefix)
+    scale = float(ap.scale)
+    do_process(inputs, output_path, prefix, scale)
 
 
 if __name__ == '__main__':
