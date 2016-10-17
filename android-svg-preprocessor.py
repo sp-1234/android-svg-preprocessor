@@ -17,6 +17,9 @@ DPIS = {
 
 
 def sh(command):
+    print('Running shell command:')
+    print(command)
+    print('\n')
     import subprocess as sp
     return_code = sp.Popen(command).wait()
     assert return_code == 0
@@ -50,15 +53,13 @@ def process_file_for_dpi(dpi_name, dpi_scale, input_file, output_path, prefix, s
         output_path,
         resource_name + ".png"
     )
-    render_density = 90 * dpi_scale * scale
+    render_density = dpi_scale * scale
+    dpi_string = str(render_density)
     cmd = [
-        'convert',
-        '-density', str(render_density),
-        '-background', 'none',
-        input_file,
-        '-depth', '8',
-        '-colorspace', 'srgb',
-        output_file_path
+        'rsvg-convert',
+        '-z', dpi_string,
+        '-o', output_file_path,
+        input_file
     ]
     sh(cmd)
 
